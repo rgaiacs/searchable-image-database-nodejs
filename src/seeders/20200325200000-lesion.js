@@ -47,6 +47,13 @@ module.exports = {
                 detalhes: "",
                 created_at: '2020-01-01',
                 updated_at: '2020-01-01'
+            },
+            {
+                id: 7, /* For migration test */
+                nome: "Unknow",
+                detalhes: "",
+                created_at: '2020-01-01',
+                updated_at: '2020-01-01'
             }
         ], {});
     },

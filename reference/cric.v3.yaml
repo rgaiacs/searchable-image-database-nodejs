@@ -1,0 +1,613 @@
+openapi: 3.0.0
+info:
+  title: Center for Recognition and Inspection of Cells (CRIC) Searchable Image Database
+  version: '2.0'
+  license:
+    name: GNU Affero General Public License
+    url: 'https://www.gnu.org/licenses/agpl-3.0.en.html'
+  contact:
+    url: 'https://database.cric.com.br'
+    email: cric@ufop.edu.br
+servers:
+  - url: 'https://api.database.cric.com.br/api/v2'
+paths:
+  /usuarios:
+    post:
+      summary: ''
+      operationId: post-usuarios
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                primeiro_nome:
+                  type: string
+                ultimo_nome:
+                  type: string
+                email:
+                  type: string
+                senha:
+                  type: string
+            examples:
+              Full:
+                value:
+                  primeiro_nome: Charles
+                  ultimo_nome: Doe
+                  email: charles@test.database.cric.com.br
+                  senha: '123.456'
+              Minimal:
+                value:
+                  primeiro_nome: Charles
+                  email: charles@test.database.cric.com.br
+                  senha: '123.456'
+      security:
+        - API Key Authorization: []
+  '/usuarios/{id_usuario}':
+    parameters:
+      - schema:
+          type: number
+        name: id_usuario
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-usuarios-id_usuario
+      security:
+        - API Key Authorization: []
+    put:
+      summary: ''
+      operationId: put-usuarios-id_usuario
+      responses:
+        '200':
+          description: OK
+      security:
+        - API Key Authorization: []
+    delete:
+      summary: ''
+      operationId: delete-usuarios-id_usuario
+      responses:
+        '200':
+          description: OK
+      security:
+        - API Key Authorization: []
+  /login:
+    post:
+      summary: ''
+      operationId: login
+      responses:
+        '200':
+          description: OK
+      description: ''
+    delete:
+      summary: ''
+      operationId: delete-login
+      responses:
+        '200':
+          description: OK
+      security:
+        - API Key Authorization: []
+      parameters: []
+  /reset-password:
+    post:
+      summary: ''
+      operationId: post-reset-password
+      responses:
+        '200':
+          description: OK
+  /imagens:
+    post:
+      summary: ''
+      operationId: post-imagens
+      responses:
+        '200':
+          description: OK
+      security:
+        - API Key Authorization: []
+  '/imagens/{id_imagem}':
+    parameters:
+      - schema:
+          type: number
+        name: id_imagem
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-imagens-id_imagem
+    put:
+      summary: ''
+      operationId: put-imagens-id_imagem
+      responses:
+        '200':
+          description: OK
+    delete:
+      summary: ''
+      operationId: delete-imagens-id_imagem
+      responses:
+        '200':
+          description: OK
+  '/usuarios/{id_usuario}/imagens':
+    parameters:
+      - schema:
+          type: string
+        name: id_usuario
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-usuarios-id_usuario-imagens
+  /lesoes:
+    post:
+      summary: ''
+      operationId: post-lesoes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    nome:
+                      type: string
+                    detalhes:
+                      type: string
+                    grade:
+                      type: integer
+              examples:
+                Cervix:
+                  value:
+                    - id: 1
+                      nome: Unkown
+                      detalhes: Unkown
+                      grade: 0
+                    - id: 2
+                      nome: Negative
+                      detalhes: Negative for intraepithelial lesion
+                      grade: 1
+                    - id: 3
+                      nome: ASC-US
+                      detalhes: Atypical squamous cells of undetermined significance
+                      grade: 2
+                    - id: 4
+                      nome: LSIL
+                      detalhes: Low grade squamous intraepithelial lesion
+                      grade: 3
+                    - id: 5
+                      nome: ASC-H
+                      detalhes: Atypical squamous cells cannot exclude HSIL
+                      grade: 4
+                    - id2: 6
+                      nome: HSIL
+                      detalhes: High grade squamous intraepithelial lesion
+                      grade: 5
+                    - id: 7
+                      nome: SCC
+                      detalhes: Squamous cell carcinoma
+                      grade: 6
+      security:
+        - API Key Authorization: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                detalhes:
+                  type: string
+                grade:
+                  type: integer
+              required:
+                - nome
+                - grade
+            examples:
+              Full:
+                value:
+                  nome: Negative
+                  detalhes: Negative for intraepithelial lesion
+                  grade: 1
+              Minimal:
+                value:
+                  nome: Negative
+                  grade: 1
+        description: ''
+    get:
+      summary: ''
+      operationId: get-lesoes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    nome:
+                      type: string
+                    detalhes:
+                      type: string
+                    grade:
+                      type: integer
+              examples:
+                Cervix:
+                  value:
+                    - id: 1
+                      nome: Unkown
+                      detalhes: Unkown
+                      grade: 0
+                    - id: 2
+                      nome: Negative
+                      detalhes: Negative for intraepithelial lesion
+                      grade: 1
+                    - id: 3
+                      nome: ASC-US
+                      detalhes: Atypical squamous cells of undetermined significance
+                      grade: 2
+                    - id: 4
+                      nome: LSIL
+                      detalhes: Low grade squamous intraepithelial lesion
+                      grade: 3
+                    - id: 5
+                      nome: ASC-H
+                      detalhes: Atypical squamous cells cannot exclude HSIL
+                      grade: 4
+                    - id2: 6
+                      nome: HSIL
+                      detalhes: High grade squamous intraepithelial lesion
+                      grade: 5
+                    - id: 7
+                      nome: SCC
+                      detalhes: Squamous cell carcinoma
+                      grade: 6
+  /descricoes:
+    parameters: []
+    post:
+      summary: ''
+      operationId: post-descricoes
+      responses:
+        '200':
+          description: OK
+    get:
+      summary: ''
+      operationId: get-descricoes
+      responses:
+        '200':
+          description: OK
+  '/descricoes/{id_descricoes}':
+    parameters:
+      - schema:
+          type: number
+        name: id_descricoes
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-descricoes-id_descricoes
+    put:
+      summary: ''
+      operationId: put-descricoes-id_descricoes
+      responses:
+        '200':
+          description: OK
+    delete:
+      summary: ''
+      operationId: delete-descricoes-id_descricoes
+      responses:
+        '200':
+          description: OK
+  '/lesoes/{id_lesoes}':
+    parameters:
+      - schema:
+          type: integer
+        name: id_lesoes
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  nome:
+                    type: string
+                  detalhes:
+                    type: string
+                  grade:
+                    type: integer
+      operationId: get-lesoes-id_lesoes
+    put:
+      summary: ''
+      operationId: put-lesoes-id_lesoes
+      responses:
+        '200':
+          description: OK
+      security:
+        - API Key Authorization: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                detalhes:
+                  type: string
+                grade:
+                  type: integer
+        description: ''
+    delete:
+      summary: ''
+      operationId: delete-lesoes-id_lesoes
+      responses:
+        '200':
+          description: OK
+      security:
+        - API Key Authorization: []
+  '/imagens/{id_imagem}/classificacao-celula':
+    parameters:
+      - schema:
+          type: string
+        name: id_imagem
+        in: path
+        required: true
+    post:
+      summary: ''
+      operationId: post-imagens-id_imagem-classificacao-celula
+      responses:
+        '200':
+          description: OK
+  '/imagens/{id_imagem}/classificacao-celula/{id_celula}':
+    parameters:
+      - schema:
+          type: string
+        name: id_imagem
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: id_celula
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-imagens-id_imagem-classificacao-celula-id_celula
+    put:
+      summary: ''
+      operationId: put-imagens-id_imagem-classificacao-celula-id_celula
+      responses:
+        '200':
+          description: OK
+    delete:
+      summary: ''
+      operationId: delete-imagens-id_imagem-classificacao-celula-id_celula
+      responses:
+        '200':
+          description: OK
+  '/imagens/{id_imagem}/segmentacao-celula/{id_celula}':
+    parameters:
+      - schema:
+          type: string
+        name: id_imagem
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: id_celula
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-imagens-id_imagem-segmentacao-celula-id_celula
+    put:
+      summary: ''
+      operationId: put-imagens-id_imagem-segmentacao-celula-id_celula
+      responses:
+        '200':
+          description: OK
+    delete:
+      summary: ''
+      operationId: delete-imagens-id_imagem-segmentacao-celula-id_celula
+      responses:
+        '200':
+          description: OK
+  '/imagens/{id_imagem}/segmentacao-celula':
+    parameters:
+      - schema:
+          type: string
+        name: id_imagem
+        in: path
+        required: true
+    post:
+      summary: ''
+      operationId: post-imagens-id_imagem-segmentacao-celula
+      responses:
+        '200':
+          description: OK
+  /imagens/download:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-imagens-download
+components:
+  schemas:
+    UsuarioBaseModel:
+      title: UsuarioBaseModel
+      type: object
+      properties:
+        id:
+          type: string
+        primeiro_nome:
+          type: string
+        ultimo_nome:
+          type: string
+        email:
+          type: string
+        senha:
+          type: string
+        ativo:
+          type: boolean
+        admin:
+          type: boolean
+    CelulaModel:
+      title: CelulaModel
+      type: object
+      properties:
+        id:
+          type: string
+        tipo_analise_realizada:
+          type: string
+        id_imagem:
+          $ref: '#/components/schemas/ImagemModel'
+        id_lesao:
+          $ref: '#/components/schemas/LesaoModel'
+        id_descricao:
+          $ref: '#/components/schemas/DescricaoModel'
+    ClassificacaoCelulaModel:
+      title: ClassificacaoCelulaModel
+      type: object
+      properties:
+        id:
+          type: string
+        coord_centro_nucleo_x:
+          type: integer
+        coord_centro_nucleo_y:
+          type: integer
+        id_usuario:
+          $ref: '#/components/schemas/UsuarioBaseModel'
+        id_celula:
+          $ref: '#/components/schemas/CelulaModel'
+    DescricaoModel:
+      title: DescricaoModel
+      type: object
+      properties:
+        id:
+          type: string
+        codigo:
+          type: integer
+        nome:
+          type: string
+    ImagemModel:
+      title: ImagemModel
+      type: object
+      properties:
+        id:
+          type: string
+        nome:
+          type: string
+        doi:
+          type: string
+        codigo_lamina:
+          type: string
+        excluida:
+          type: boolean
+        classificacao_aprovada:
+          type: boolean
+        dt_aquisicao:
+          type: string
+        caminho_imagem:
+          type: string
+        altura:
+          type: integer
+        largura:
+          type: integer
+        id_usuario:
+          $ref: '#/components/schemas/UsuarioBaseModel'
+        id_lesao:
+          $ref: '#/components/schemas/CelulaModel'
+    LesaoModel:
+      title: LesaoModel
+      type: object
+      properties:
+        id:
+          type: string
+        nome:
+          type: string
+        detalhes:
+          type: string
+        grade:
+          type: integer
+    SegmentacaoCitoplasmaModel:
+      title: SegmentacaoCitoplasmaModel
+      type: object
+      properties:
+        id:
+          type: string
+        coord_x:
+          type: integer
+        coord_y:
+          type: integer
+        id_usuario:
+          $ref: '#/components/schemas/UsuarioBaseModel'
+        id_celula:
+          $ref: '#/components/schemas/CelulaModel'
+    SegmentacaoNucleoModel:
+      title: SegmentacaoNucleoModel
+      type: object
+      properties:
+        id:
+          type: string
+        coord_x:
+          type: integer
+        coord_y:
+          type: integer
+        id_usuario:
+          $ref: '#/components/schemas/UsuarioBaseModel'
+        id_celula:
+          $ref: '#/components/schemas/CelulaModel'
+    SessaoUsuarioModel:
+      title: SessaoUsuarioModel
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        token_autenticacao:
+          type: string
+  securitySchemes:
+    API Key Authorization:
+      name: authorization
+      type: apiKey
+      in: header
